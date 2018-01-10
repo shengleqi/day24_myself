@@ -1,6 +1,6 @@
 import re
 from django.conf import settings
-from django.shortcuts import HttpResponse
+from django.shortcuts import HttpResponse,render
 class MiddlewareMixin(object):
     def __init__(self, get_response=None):
         self.get_response = get_response
@@ -18,12 +18,13 @@ class MiddlewareMixin(object):
 
 
 class RbacMiddleware(MiddlewareMixin):
-
     def process_request(self,request):
         # 当前访问的URL
         current_url = request.path_info
         # print("type(current_url):",type(current_url))
         # print("type(current_url):",type(current_url.split("/")[3]))
+        # if "/favicon.ico"==request.path_info :
+        #     return HttpResponse("404")
 
         for valid in settings.VALID_LIST:
             if re.match(valid,current_url):
@@ -33,7 +34,8 @@ class RbacMiddleware(MiddlewareMixin):
         permission_dict = request.session.get(settings.PERMISSION_DICT_SESSION_KEY)
         print("permission_dict:",permission_dict)
         if not permission_dict:
-            return HttpResponse('当前用户无权限信息')
+            # return HttpResponse('当前用户无权限信息')
+            return HttpResponse('当前用户未登录！')
 
         # 用户权限和当前URL进行匹配
         flag = False
@@ -52,4 +54,5 @@ class RbacMiddleware(MiddlewareMixin):
                 break
 
         if not flag:
-            return HttpResponse('无权限访问')
+            # return HttpResponse('无权限访问,请联系管理员。')
+            return render(request,"404.html")

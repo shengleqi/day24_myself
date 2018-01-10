@@ -1,0 +1,60 @@
+{% extends "layout.html" %}
+{% block css %}
+    <style>
+        .pager a{
+            display: inline-block;
+            padding: 3px 5px;
+            margin: 0 3px;
+            border: 1px solid #dddddd;
+        }
+        .pager a.active{
+            background-color: cadetblue;
+            color: white;
+        }
+    </style>
+{% endblock css %}
+
+{% block body %}
+    <div> &nbsp;&nbsp;
+        {% if 'add' in request.permission_codes %}
+            <a href="/hosts/add/" class="btn btn-primary ">添加用户</a>
+        {% endif %}
+
+    </div>
+        <table border="1" class="table table-condensed">
+            <thead>
+                <tr class="active " >
+                    <th class="text-center">编号</th>
+                    <th class="text-center">用户名</th>
+                    {% if 'del' in request.permission_codes %}
+                        <th class="text-center">删除</th>
+                    {% endif %}
+                    {% if 'edit' in request.permission_codes %}
+                        <th class="text-center">编辑</th>
+                    {% endif %}
+                    <th class="text-center">所在部门</th>
+
+                </tr>
+            </thead>
+            {% for user in user_list %}
+                <tr >
+                    <td class="text-center">{{ forloop.counter  }}</td>
+                    <td class="text-center">{{ user.username }}</td>
+                    <td class="text-center">运维部门</td>
+                    {% if 'add' in request.permission_codes %}
+                        <td class="text-center"><a href="/users/del/{{ user.id }}/">删除</a></td>
+                    {% endif %}
+                    {% if 'add' in request.permission_codes %}
+                        <td class="text-center"><a href="/users/edit/{{ user.id }}/">编辑</a></td>
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+        </table>
+    <div class="pager">
+        {{ page_html|safe}}
+    </div>
+
+
+
+{% endblock body %}
