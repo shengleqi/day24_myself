@@ -1,6 +1,6 @@
 from django.shortcuts import render,HttpResponse,redirect
 
-from rbac.forms import  HostModelsForm,LoginForm,RegForm
+from rbac.forms import  HostModelsForm,LoginForm,RegForm,UserInfoModelsForm
 
 from rbac.service.init_permission import init_permission
 
@@ -81,7 +81,7 @@ def hosts(request):
     username = request.session[settings.USER_SESSION_KEY]['username']
     return  render(request,"host.html",{"page_html":page_obj.page_html,"host_list":host_list,"username":username})
 
-def add(request):
+def hosts_add(request):
     username = request.session[settings.USER_SESSION_KEY]['username']
     if request.method=='GET':
         form= HostModelsForm()
@@ -128,6 +128,44 @@ def users(request):
     username = request.session[settings.USER_SESSION_KEY]['username']
     return render(request, "users.html", {"page_html": page_obj.page_html, "user_list": user_list, "username": username})
 
+def users_add(request):
+    username = request.session[settings.USER_SESSION_KEY]['username']
+    if request.method=='GET':
+        form= UserInfoModelsForm()
+        return  render(request,"add_user.html",{"form":form,"username":username})
+    else:
+        form=UserInfoModelsForm(data=request.POST)
+        if form.is_valid():
+            # print( form.cleaned_data)
+            obj=form.save()
+            return  redirect("/users/")
+    return  render(request,"add_user.html",{'form': form,"username":username})
+
+def users_del(request,nid):
+    obj = models.UserInfo.objects.filter(id=nid).first()
+    if not obj:
+        return HttpResponse("用户不存在！")
+    if request.method == "GET":
+        models.UserInfo.objects.filter(id=nid).delete()
+        return redirect("/users/")
+
+def users_edit(request,nid):
+    obj = models.UserInfo.objects.filter(id=nid).first()
+    username = request.session[settings.USER_SESSION_KEY]['username']
+    if not obj:
+        return HttpResponse("用户不存在！")
+
+    if request.method == "GET":
+        print("nid:", nid)
+        form = UserInfoModelsForm(instance=obj)
+        return render(request, "edit_user.html", {"form": form, "username": username})
+    else:
+        form = UserInfoModelsForm(data=request.POST, instance=obj)
+        if form.is_valid():
+            form.save()
+            return redirect("/users/")
+        print("errors++>", form.errors)
+        return render(request, "edit_user.html", {"form": form, "username": username})
 
 def test(request):
     # print(" pint=>test")
@@ -154,3 +192,16 @@ def test(request):
     #         port=1521,
     #     )
     # return  HttpResponse("创建ok")
+
+
+
+
+
+
+
+
+
+
+
+
+

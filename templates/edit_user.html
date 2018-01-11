@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h2>编辑用户</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% for filed in form %}
+            <p>{{ filed.label }}:{{ filed }}{{ filed.errors.0 }} </p>
+        {% endfor%}
+
+        <input type="submit" value="提交">
+    </form>
+
+{% endblock %}

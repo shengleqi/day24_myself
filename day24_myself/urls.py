@@ -24,13 +24,32 @@ urlpatterns = [
     url(r'^reg/$', views.reg),
     url(r'^logout_v/$', views.logout_v),
     url(r'^admin/', admin.site.urls),
+
     url(r'^hosts/$', views.hosts),
-    url(r'^hosts/add/$', views.add),
+    url(r'^hosts/add/$', views.hosts_add),
     url(r'^hosts/edit/(\d+)/$', views.edit_host),
     url(r'^hosts/del/(\d+)/$', views.delete_host),
 
     url(r'^users/$', views.users),
+    url(r'^users/add/$', views.users_add),
+    url(r'^users/del/(\d+)/$', views.users_del),
+    url(r'^users/edit/(\d+)/$', views.users_edit),
 
 
     url(r'^test/$', views.test),
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

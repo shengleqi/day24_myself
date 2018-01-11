@@ -74,3 +74,23 @@ class RegForm(Form):
         else:
             raise ValidationError("两次密码不一致")
 
+class UserInfoModelsForm(ModelForm):
+    class Meta:
+        model=models.UserInfo
+        fields=("username","password","roles")
+        widgets = {
+            'username': widgets.TextInput(attrs={"class": "form-control"}),
+            'password': widgets.PasswordInput(attrs={"class": "form-control"}),
+            'roles': widgets.SelectMultiple(attrs={"class": "form-control"}),
+        }
+
+        labels={
+            "username":"用户名",
+            "password":"密码",
+            "roles":"角色",
+        }
+        error_messages={
+            "ip":{
+                "required":"IP不能为空",
+            }
+        }
