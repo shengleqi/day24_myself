@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+
+    <link rel="stylesheet" href="/static/dist/css/bootstrap.css">
+    <script src="/static/dist/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet"  href="/static/css/login.css">
+    <script src="/static/dist/js/bootstrap.js"></script>
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="row col-md-offset-3 col-md-5">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2 style="text-align:center">用户注册</h2>
+            <p class="username"  >{{ form.username.label }}: {{ form.username }} {{ form.username.errors.0 }}</p><span ></span>
+            <p class="password" >{{ form.password.label }}: {{ form.password }} {{ form.password.errors.0 }}</p><span ></span>
+            <p class="re_password" >{{ form.re_password.label }}: {{ form.re_password }} {{ form.re_password.errors.0 }}</p><span ></span>
+            <p class="email" >{{ form.email.label }}: {{ form.email }} {{ form.email.errors.0 }}</p><span ></span>
+{#            <button type="button" class="regBtn" value="提交"></button><span ></span>#}
+             <input class="regBtn" type="submit" value="提交">
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+{% endblock %}

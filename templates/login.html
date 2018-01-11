@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        body{
+            margin: 0;
+        }
+        .pg-header{
+            height: 48px;
+            background-color: cadetblue;
+            text-align:center;
+            line-height:48px;
+            font-size: 22px;
+        }
+
+    </style>
+        <link rel="stylesheet" href="/static/rbac/rbac.css" />
+        <link rel="stylesheet" href="/static/dist/css/bootstrap.css">
+        <script src="/static/dist/js/jquery-3.2.1.min.js"></script>
+        <script src="/static/dist/js/bootstrap.js"></script>
+
+</head>
+<body>
+{#<div class="container ">#}
+    <div class="pg-header">
+        主机管理系统
+        <span class="btn  pull-right " style="margin-top: 16px">欢迎：{{ username }}</span>
+    </div>
+
+    <div class="row col-md-offset-4 col-md-3">
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2 style="text-align:center">用户登录</h2>
+            <p>{{ form.username.label }}: {{ form.username }} {{ form.username.errors.0 }}</p>
+            <p>{{ form.password.label }}: {{ form.password }} {{ form.password.errors.0 }}</p>
+            <input type="submit" value="提交">
+        </form>
+
+    </div>
+{#</div>#}
+</body>
+</html>
+
+
+
