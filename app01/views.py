@@ -163,9 +163,9 @@ def users_edit(request,nid):
     else:
         form = UserInfoModelsForm(data=request.POST, instance=obj)
         if form.is_valid():
+            form.instance.password = md5(form.instance.password)
             form.save()
             return redirect("/users/")
-        print("errors++>", form.errors)
         return render(request, "edit_user.html", {"form": form, "username": username})
 
 def test(request):
