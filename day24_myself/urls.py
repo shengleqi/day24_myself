@@ -35,7 +35,6 @@ urlpatterns = [
     url(r'^users/del/(\d+)/$', views.users_del),
     url(r'^users/edit/(\d+)/$', views.users_edit),
 
-
     url(r'^test/$', views.test),
 ]
 

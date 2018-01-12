@@ -135,8 +135,9 @@ def users_add(request):
         return  render(request,"add_user.html",{"form":form,"username":username})
     else:
         form=UserInfoModelsForm(data=request.POST)
+
         if form.is_valid():
-            # print( form.cleaned_data)
+            form.instance.password=md5(form.instance.password)
             obj=form.save()
             return  redirect("/users/")
     return  render(request,"add_user.html",{'form': form,"username":username})
